@@ -10,21 +10,17 @@
 
     function ControladorInformacionDePelicula() {
         this.cargarDetalle = function(data) {
-                var pelicula, actores;
-                
-                pelicula = data.pelicula;
-                actores = data.actores;
-                genero = data.pelicula.nombre;
+                const { peliculas, actores, genero } = data;
 
-                $(".imagen").attr("src", pelicula.poster);
-                $(".titulo, title").html(pelicula.titulo + " (" + pelicula.anio + ")");
-                $(".trama").html(pelicula.trama);
-                var fecha = new Date(pelicula.fecha_lanzamiento);
+                $(".imagen").attr("src", peliculas.poster);
+                $(".titulo, title").html(peliculas.titulo + " (" + peliculas.anio + ")");
+                $(".trama").html(peliculas.trama);
+                var fecha = new Date(peliculas.fecha_lanzamiento);
                 $(".lanzamiento").html(fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getUTCFullYear());
                 $(".genero").html(genero);
-                $(".director").html(pelicula.director);
-                $(".duracion").html(pelicula.duracion);
-                $(".rank").html(pelicula.puntuacion + "/10");
+                $(".director").html(peliculas.director);
+                $(".duracion").html(peliculas.duracion);
+                $(".rank").html(peliculas.puntuacion + "/10");
                 var actores_string = '';
                 for (i = 0; i < actores.length; i++) {
                     actores_string += actores[i].nombre + ", "

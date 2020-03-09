@@ -10,3 +10,6 @@ poster varchar(300),
 trama varchar(700),
 primary key (id)
 );
+
+alter table pelicula add column genero_id int;
+alter table pelicula add foreign key (genero_id) references genero(id);

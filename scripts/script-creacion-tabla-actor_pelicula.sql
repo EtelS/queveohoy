@@ -12,3 +12,4 @@ alter table actor_pelicula add foreign key (pelicula_id) references pelicula(id)
 -- despues de crear la tabla actor genero la foreign key 
 alter table actor_pelicula add foreign key (actor_id) references actor(id);
 
+
