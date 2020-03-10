@@ -13,11 +13,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
-
+app.get('/peliculas/recomendacion', peliculaController.recomendarPelicula);
 app.get('/peliculas', peliculaController.mostrarPeliculas);
 app.get('/generos', peliculaController.mostrarGeneros);
 app.get('/peliculas/:id', peliculaController.obtenerPelicula);
-app.get('/peliculas/recomendacion?', peliculaController.recomendarPelicula);
+
 
 
 //seteamos el puerto en el cual va a escuchar los pedidos la aplicación

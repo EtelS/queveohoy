@@ -98,26 +98,34 @@ function recomendarPelicula(req, res){
     let anio_inicio = req.query.anio_inicio;
     let anio_fin= req.query.anio_fin;
     let puntuacion= req.query.puntuacion;
-    let sql= 'select * from pelicula  ';
-    // let where=""
-    // if (genero){
-    //     where += ' where genero= "'+genero+ '" ';
-    //     console.log("where con genero: ", where);
-    // }
-    // if (anio_inicio){
-    //     if (genero){
-    //         where +=' and anio between '+anio_inicio+' and '+anio_fin;
-    //         console.log("where con genero y anio", where);
+    let sql= 'select * from pelicula';
+    let where=""
 
-    //     }
-    //     where =' where anio between '+anio_inicio+' and '+anio_fin;
-    //     console.log ("where con anio sin genero ", where);
+    if (genero){
+        where += ' where genero= "'+genero+ '" ';
+        console.log("where con genero: ", where);
+    }
+    if (anio_inicio){
+        if (genero){
+            where +=' and anio between '+anio_inicio+' and '+anio_fin;
+            console.log("where con genero y anio", where);
 
-    // }
+        }
+        where =' where anio between '+anio_inicio+' and '+anio_fin;
+        console.log ("where con anio sin genero ", where);
 
-    // sql+=where;
+    }
+        if (puntuacion){
+            if(genero||anio_inicio){
+                where+=' and puntuacion= '+puntuacion
+            }
 
-    // console.log("sql entero ", sql);
+            where += ' where puntuacion='+puntuacion;
+    }
+
+     sql+=where;
+
+     console.log("sql entero ", sql);
 
     con.query(sql, function(error, resultado, fields){
         if (error){
