@@ -45,7 +45,6 @@ function mostrarPeliculas(req, res){//esto solo muestra las peliculas en pantall
             console.log("No se encontró ninguna pelicula con los filtros propuestos");
             return res.status(404).send("No se encontró ninguna pelicula con los filtros propuestos");
         }else{
-            console.log(resultado.length)
             let response= {
                 'peliculas':resultado,
                 'total': resultado[0].total
@@ -98,34 +97,26 @@ function recomendarPelicula(req, res){
     let anio_inicio = req.query.anio_inicio;
     let anio_fin= req.query.anio_fin;
     let puntuacion= req.query.puntuacion;
-    let sql= 'select * from pelicula';
+    let sql= 'select p.id, p.poster, p.trama, p.titulo, g.nombre from pelicula p inner join genero g on p.genero_id= g.id';
     let where=""
 
     if (genero){
-        where += ' where genero= "'+genero+ '" ';
-        console.log("where con genero: ", where);
+        where += ' where g.nombre = "'+genero+ '" ';
     }
     if (anio_inicio){
         if (genero){
-            where +=' and anio between '+anio_inicio+' and '+anio_fin;
-            console.log("where con genero y anio", where);
-
-        }
-        where =' where anio between '+anio_inicio+' and '+anio_fin;
-        console.log ("where con anio sin genero ", where);
-
+            where +=' and p.anio between '+anio_inicio+' and '+anio_fin;
+         }
     }
         if (puntuacion){
             if(genero||anio_inicio){
-                where+=' and puntuacion= '+puntuacion
+                where+=' and p.puntuacion= '+puntuacion
             }
 
-            where += ' where puntuacion='+puntuacion;
+            where += ' where p.puntuacion='+puntuacion;
     }
 
      sql+=where;
-
-     console.log("sql entero ", sql);
 
     con.query(sql, function(error, resultado, fields){
         if (error){

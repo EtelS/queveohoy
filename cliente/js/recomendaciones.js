@@ -54,7 +54,7 @@ function ControladorRecomendaciones() {
         });
 
         $('.paso-2 select').change(function() {
-            self.genero = $(this).attr("genero");
+            self.genero = $(this).find('option:selected').attr("genero");
             self.pedirRecomendacion();
         });
 
@@ -63,7 +63,6 @@ function ControladorRecomendaciones() {
         $(".botones-resultado .ver-mas").click(function() {
             var id = (self.pelicula_actual).id;
             window.location.href = "info.html?id=" + id;
-            console.log(id);
         });
 
         //se le asigna funcionalidad al boton "Otra opcion" que se va a mostrar debajo de la pelicula recomendada.

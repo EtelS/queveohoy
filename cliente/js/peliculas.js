@@ -71,23 +71,19 @@ function ControladorPeliculas() {
             query_params.tipo_orden = orden_array[1];
 
             var query = $.param(query_params);
-            console.log(query)
             //se hace el pedido al backend de las peliculas
             $.getJSON(servidor + "/peliculas?" + query,
                 function(data) {
-                    console.log("cliente: ", data.peliculas.length)
                     //se ejecuta la funcion cargarListado() pasandole como parametro las peliculas que se obtuvieron
                     self.cargarListado(data.peliculas);
             });
             
             const queryTotalPeliculas = "&columna_orden=titulo&tipo_orden=ASC"
-            console.log(queryTotalPeliculas)
             //se hace el pedido al backend de las peliculas
             $.getJSON(servidor + "/peliculas?" + queryTotalPeliculas,
                 function(data) {
                     //se ejecuta la fucion cargarBotones() pasandole el total de peliculas que se obtienen como resultado
                     const total = data.peliculas.length
-                    console.log("cliente2: ", total)
                     self.cargarBotones(total);
             });
         },
