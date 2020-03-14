@@ -1,3 +1,4 @@
+USE que_veo_hoy;
 create table pelicula(
 id int not null auto_increment,
 titulo varchar(100),

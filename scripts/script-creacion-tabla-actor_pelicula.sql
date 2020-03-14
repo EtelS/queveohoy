@@ -1,3 +1,4 @@
+USE que_veo_hoy;
 create table actor_pelicula(
 id int not null auto_increment,
 actor_id int,

@@ -9,6 +9,7 @@ function mostrarPeliculas(req, res){//esto solo muestra las peliculas en pantall
     let columna_orden= req.query.columna_orden; //titulo, anio o genero
     let tipo_orden= req.query.tipo_orden;
     let paginacion = (pagina - 1) * cantidad;
+    
 
     let sql= "select * from pelicula";
     let where ="";
@@ -27,14 +28,13 @@ function mostrarPeliculas(req, res){//esto solo muestra las peliculas en pantall
             where = where+" and anio =  "+anio;
         }
         where = " anio = "+anio;
+        sql1 = sql1 + " and anio =" +anio;
     }
     if (where){
         sql= sql+" where "+where;
     }
     sql= sql+" order by "+columna_orden+" "+tipo_orden;
-    if (cantidad) {
-        sql += " limit "+ cantidad +" offset "+paginacion;
-    }
+    
 
     con.query(sql, function(error, resultado, fields){
         if (error){
@@ -44,14 +44,25 @@ function mostrarPeliculas(req, res){//esto solo muestra las peliculas en pantall
         if (resultado.length==0){
             console.log("No se encontró ninguna pelicula con los filtros propuestos");
             return res.status(404).send("No se encontró ninguna pelicula con los filtros propuestos");
-        }else{
-            let response= {
-                'peliculas':resultado,
-                'total': resultado[0].total
-            };
-            res.send(response);
         }
-    })
+        total= resultado.length;
+        if (cantidad) {
+            sql += " limit "+ cantidad +" offset "+paginacion;
+        }
+        con.query(sql, function(error, resultado,fields){
+            if (error){console.log("Hubo un error en la consulta ", error.message);
+            return res.status(404).send("Hubo un error en la consulta");}
+            else{
+            var response= {
+                'peliculas':resultado,
+                'total': total
+            };}
+            res.send(response);
+    
+        })
+            
+             })
+
 
 }
 
@@ -111,9 +122,8 @@ function recomendarPelicula(req, res){
         if (puntuacion){
             if(genero||anio_inicio){
                 where+=' and p.puntuacion= '+puntuacion
-            }
-
-            where += ' where p.puntuacion='+puntuacion;
+            } else{where += ' where p.puntuacion= '+puntuacion;}         
+            
     }
 
      sql+=where;

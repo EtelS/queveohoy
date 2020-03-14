@@ -1,3 +1,5 @@
+USE que_veo_hoy;
+
 INSERT INTO `genero` (`id`, `nombre`)
 VALUES
 	(1,'Action'),
